@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="80" fill="url(#bg)"/>
+  <g transform="translate(128, 112)">
+    <!-- Car icon -->
+    <path d="M120 200 L120 280 Q120 300 140 300 L232 300 Q252 300 252 280 L252 200 Z" fill="white" opacity="0.9"/>
+    <path d="M140 140 L160 80 Q170 60 190 60 L210 60 Q230 60 240 80 L260 140 Z" fill="white" opacity="0.9"/>
+    <circle cx="156" cy="300" r="24" fill="#1d4ed8"/>
+    <circle cx="236" cy="300" r="24" fill="#1d4ed8"/>
+    <!-- Calendar -->
+    <rect x="180" y="100" width="80" height="60" rx="8" fill="white" opacity="0.2"/>
+    <rect x="180" y="100" width="80" height="16" rx="8" fill="white" opacity="0.4"/>
+    <circle cx="240" cy="108" r="4" fill="white" opacity="0.6"/>
+    <text x="220" y="145" text-anchor="middle" fill="white" font-size="24" font-weight="bold" font-family="system-ui">1</text>
+    <text x="220" y="165" text-anchor="middle" fill="white" font-size="14" font-family="system-ui">WEEK</text>
+  </g>
+</svg>
