@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/client';
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<{ id: string; email: string; name: string } | null>(null);
@@ -12,9 +12,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const session = await auth.api.getSession({
-          headers: new Headers({ cookie: document.cookie }),
-        });
+        const session = await getSession();
         if (session) {
           setUser({ id: session.user.id, email: session.user.email, name: session.user.name });
         } else {

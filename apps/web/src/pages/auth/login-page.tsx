@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Mail, Lock, Loader2 } from 'lucide-react';
-import { auth } from '@/lib/auth';
+import { signInEmail, signInSocial } from '@/lib/auth/client';
 import { toast } from '@/hooks/use-toast';
 
 export function LoginPage() {
@@ -25,9 +25,7 @@ export function LoginPage() {
     setLoading(true);
     setError('');
     try {
-      await auth.api.signInEmail({
-        body: { email, password },
-      });
+      await signInEmail({ email, password });
       toast({ title: 'Welcome back!', variant: 'success' });
       navigate(from, { replace: true });
     } catch (err: unknown) {
@@ -42,9 +40,7 @@ export function LoginPage() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await auth.api.signInSocial({
-        body: { provider: 'google', callbackURL: '/dashboard' },
-      });
+      await signInSocial('google', '/dashboard');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Google login failed';
       toast({ title: 'Error', description: message, variant: 'destructive' });

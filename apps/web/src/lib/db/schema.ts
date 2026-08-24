@@ -5,10 +5,18 @@ export const workshops = sqliteTable(
   'workshops',
   {
     id: text('id').primaryKey(),
+    // BetterAuth required fields
     email: text('email').unique().notNull(),
+    emailVerified: integer('email_verified', { mode: 'boolean' }).default(false).notNull(),
+    image: text('image'),
     passwordHash: text('password_hash'),
     googleId: text('google_id').unique(),
     name: text('name').notNull(),
+    role: text('role').default('user').notNull(),
+    banned: integer('banned', { mode: 'boolean' }).default(false).notNull(),
+    banReason: text('ban_reason'),
+    banExpires: integer('ban_expires', { mode: 'timestamp' }),
+    // Custom fields
     phone: text('phone'),
     address: text('address'),
     creditsBalance: integer('credits_balance').default(5).notNull(),
@@ -24,6 +32,76 @@ export const workshops = sqliteTable(
     uniqueIndex('workshops_email_idx').on(t.email),
     uniqueIndex('workshops_google_id_idx').on(t.googleId),
   ]
+);
+
+// BetterAuth standard tables
+export const sessions = sqliteTable(
+  'sessions',
+  {
+    id: text('id').primaryKey(),
+    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+    token: text('token').unique().notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`)
+      .notNull(),
+    updatedAt: integer('updated_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`)
+      .notNull(),
+    ipAddress: text('ip_address'),
+    userAgent: text('user_agent'),
+    userId: text('user_id')
+      .notNull()
+      .references(() => workshops.id, { onDelete: 'cascade' }),
+    impersonatedBy: text('impersonated_by'),
+  },
+  (t) => [
+    index('sessions_user_id_idx').on(t.userId),
+    uniqueIndex('sessions_token_idx').on(t.token),
+  ]
+);
+
+export const accounts = sqliteTable(
+  'accounts',
+  {
+    id: text('id').primaryKey(),
+    accountId: text('account_id').notNull(),
+    providerId: text('provider_id').notNull(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => workshops.id, { onDelete: 'cascade' }),
+    accessToken: text('access_token'),
+    refreshToken: text('refresh_token'),
+    idToken: text('id_token'),
+    accessTokenExpiresAt: integer('access_token_expires_at', { mode: 'timestamp' }),
+    refreshTokenExpiresAt: integer('refresh_token_expires_at', { mode: 'timestamp' }),
+    scope: text('scope'),
+    password: text('password'),
+    issuer: text('issuer'),
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`)
+      .notNull(),
+    updatedAt: integer('updated_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`)
+      .notNull(),
+  },
+  (t) => [
+    index('accounts_user_id_idx').on(t.userId),
+    uniqueIndex('accounts_provider_account_idx').on(t.providerId, t.accountId),
+  ]
+);
+
+export const verifications = sqliteTable(
+  'verifications',
+  {
+    id: text('id').primaryKey(),
+    identifier: text('identifier').notNull(),
+    value: text('value').notNull(),
+    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`),
+    updatedAt: integer('updated_at', { mode: 'timestamp' })
+      .default(sql`(strftime('%s','now'))`),
+  }
 );
 
 export const vehicles = sqliteTable(

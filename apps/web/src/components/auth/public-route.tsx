@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/client';
 
 export function PublicRoute({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
@@ -10,9 +9,7 @@ export function PublicRoute({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const session = await auth.api.getSession({
-          headers: new Headers({ cookie: document.cookie }),
-        });
+        const session = await getSession();
         if (session) {
           // Already logged in, redirect to dashboard
           window.location.href = '/dashboard';
@@ -34,5 +31,5 @@ export function PublicRoute({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 }

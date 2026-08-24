@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Loader2, CheckCircle } from 'lucide-react';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/client';
 import { toast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,23 @@ export function VerifyEmailPage() {
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
 
+  const checkVerification = async () => {
+    setLoading(true);
+    try {
+      const session = await getSession();
+      if (session?.user?.emailVerified) {
+        setVerified(true);
+        navigate('/dashboard');
+      } else {
+        toast({ title: 'Email not verified yet', description: 'Please check your inbox and click the verification link.', variant: 'default' });
+      }
+    } catch {
+      toast({ title: 'Please check your email first', variant: 'default' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const resendVerification = async () => {
     setLoading(true);
     try {
@@ -21,22 +38,6 @@ export function VerifyEmailPage() {
       toast({ title: 'Failed to send', variant: 'destructive' });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const checkVerification = async () => {
-    try {
-      const session = await auth.api.getSession({
-        headers: new Headers({ cookie: document.cookie }),
-      });
-      if (session?.user.emailVerified) {
-        setVerified(true);
-        navigate('/dashboard');
-      } else {
-        toast({ title: 'Email not verified yet', description: 'Please check your inbox and click the verification link.', variant: 'default' });
-      }
-    } catch {
-      toast({ title: 'Please check your email first', variant: 'default' });
     }
   };
 

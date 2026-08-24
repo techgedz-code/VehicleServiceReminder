@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Mail, Lock, User, Loader2 } from 'lucide-react';
-import { auth } from '@/lib/auth';
+import { signUpEmail, signInSocial } from '@/lib/auth/client';
 import { toast } from '@/hooks/use-toast';
 
 export function SignupPage() {
@@ -33,9 +33,7 @@ export function SignupPage() {
     }
     setLoading(true);
     try {
-      await auth.api.signUpEmail({
-        body: { email, password, name },
-      });
+      await signUpEmail({ email, password, name });
       toast({ title: 'Account created!', description: 'Please check your email to verify.', variant: 'success' });
       navigate('/verify-email');
     } catch (err: unknown) {
@@ -50,9 +48,7 @@ export function SignupPage() {
   const handleGoogleSignup = async () => {
     setLoading(true);
     try {
-      await auth.api.signInSocial({
-        body: { provider: 'google', callbackURL: '/dashboard' },
-      });
+      await signInSocial('google', '/dashboard');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Google signup failed';
       toast({ title: 'Error', description: message, variant: 'destructive' });
