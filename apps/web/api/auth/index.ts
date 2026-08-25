@@ -8,4 +8,5 @@ app.on(['GET', 'POST'], '/*', async (c) => {
   return auth.handler(c.req.raw);
 });
 
-export default app;
+// Vercel Edge Functions require a default export of the handler
+export default app.fetch.bind(app);
