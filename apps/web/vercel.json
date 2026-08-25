@@ -12,14 +12,6 @@
       "destination": "/dashboard/$1"
     },
     {
-      "source": "/api/auth/(.*)",
-      "destination": "/api/auth"
-    },
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
