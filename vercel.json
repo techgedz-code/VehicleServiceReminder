@@ -4,8 +4,7 @@
   "framework": "vite",
   "functions": {
     "api/**/*.ts": {
-      "runtime": "edge",
-      "maxDuration": 30
+      "runtime": "edge"
     }
   },
   "rewrites": [
