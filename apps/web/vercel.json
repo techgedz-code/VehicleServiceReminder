@@ -1,12 +1,7 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "edge",
-      "maxDuration": 30
-    }
-  },
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/service/(.*)",
