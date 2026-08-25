@@ -174,7 +174,6 @@ app.get('/export/csv', async (c) => {
   
   const headers = ['Plate Number', 'Owner Name', 'Owner Phone', 'Owner Email', 'Last Service Date', 'Last Service Type', 'Last Mileage', 'Next Service Date', 'Next Service Mileage', 'Status'];
   const rows = vehicles.map((v) => {
-    // Access latestService as array
     const lastService = (v as any).latestService?.[0];
     const nextDate = lastService?.nextServiceDate;
     const nextMileage = lastService?.nextServiceMileage;

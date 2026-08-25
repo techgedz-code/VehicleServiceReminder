@@ -11,8 +11,6 @@ app.get('/:qrToken', async (c) => {
     return c.json({ error: 'Service record not found' }, 404);
   }
   
-  // The query returns workshop and vehicle but TypeScript doesn't know that
-  // because the with clause is conditional. Let's use type-safe access.
   const workshop = (record as any).workshop;
   const vehicle = (record as any).vehicle;
   
