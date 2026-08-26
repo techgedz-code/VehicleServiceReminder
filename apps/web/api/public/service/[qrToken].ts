@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { getServiceRecordByQrToken } from '@/lib/db/queries';
+import { getServiceRecordByQrToken } from '../../../src/lib/db/queries';
 
 const app = new Hono();
 
