@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { auth } from '../../../src/lib/auth';
+import { auth } from '../../src/lib/auth';
 
 const app = new Hono();
 

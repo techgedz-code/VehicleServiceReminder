@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { createPayment, updatePaymentStatus, getWorkshopById, updateWorkshopCredits, addCreditsLedgerEntry } from '../../../src/lib/db/queries';
+import { createPayment, updatePaymentStatus, getWorkshopById, updateWorkshopCredits, addCreditsLedgerEntry } from '../../src/lib/db/queries';
 
 const app = new Hono();
 

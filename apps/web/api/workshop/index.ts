@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
-import { authMiddleware } from '../../../src/middleware/auth';
+import { authMiddleware } from '../../src/middleware/auth';
 import {
   getVehiclesByWorkshop,
   createVehicle,
@@ -15,7 +15,7 @@ import {
   getAnalyticsData,
   getCreditsLedger,
   addCreditsLedgerEntry,
-} from '../../../src/lib/db/queries';
+} from '../../src/lib/db/queries';
 
 const app = new Hono<{ Variables: { user: { id: string; email: string; name: string } } }>();
 
